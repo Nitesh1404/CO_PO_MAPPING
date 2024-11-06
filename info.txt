@@ -1,0 +1,11 @@
+CO_PO mapping system 
+
+1. pratik 
+	home page -> image(pixabay,unsplash,google pixel) , navbar-> home generate mapping , access mapping 
+			  -> home decent information, problem ,about 
+2. Risu and Priti 
+	generate mapping page -> input excell-> marks , co_po mapping 
+						  -> table form (bootstrap) , calculation mapping last map;
+						  -> generate pdf and save to DB
+3. Nitesh
+   Backend -> schema - jo bhi generate page ka hai usko mai Db mai save kruga   
