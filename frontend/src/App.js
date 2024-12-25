@@ -6,15 +6,13 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import About from './components/About';
 import Info from './components/Info';
-import WebInfo from './components/WebInfo';
+import Feedback from './components/Feedback';
 import GenerateMapping from './components/generatemapping/GenerateMapping';
 
 const App = () => (
   <div className="d-flex flex-column min-vh-100">
-    {/* Navbar */}
     <Navbar />
 
-    {/* Main Content */}
     <div className="container mt-3 flex-grow-1 custom-scroll">
       <Routes>
         {/* Route for Home Page */}
@@ -30,11 +28,10 @@ const App = () => (
         <Route path="/info" element={<Info />} />
 
         {/* Route for WebInfo Page */}
-        <Route path="/webinfo" element={<WebInfo />} />
+        <Route path="/Feedback" element={<Feedback />} />
       </Routes>
     </div>
 
-    {/* Footer */}
     <Footer />
   </div>
 );
