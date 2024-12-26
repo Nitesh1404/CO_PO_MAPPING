@@ -17,7 +17,10 @@ const GenerateMapping = () => {
 	const [eseData, setEseData] = useState([]);
 	const [headers, setHeaders] = useState([]);
 	const [eseHaders, setEseHeaders] = useState([]);
+	// const [inputValue, setInputValue] = useState('');
+
 	const [targetValue, setTargetValue] = useState('');
+	const[targetValues,setTarget]=useState('');
 	const [eseStats, setEseStats] = useState({ attempted: 0, scoredAbove: 0 });
 	const [eseAttainmentLevels, setEseAttainmentLevels] = useState({});
 	const [attemptedCounts, setAttemptedCounts] = useState({
@@ -80,6 +83,28 @@ const GenerateMapping = () => {
 			reader.readAsArrayBuffer(file);
 		}
 	};
+
+	// 	const [attainmentLevel, setAttainmentLevel] = useState({ level1: null, level2: null, level3: null });
+
+	// const handleInputChange = (event) => {
+	// 	const value = event.target.value;
+	// 	setInputValue(value);
+
+	// 	// Split the input by commas and validate
+	// 	const levels = value.split(',').map((v) => v.trim());
+	// 	if (levels.length === 3) {
+	// 		const [level1, level2, level3] = levels.map((v) => (v.match(/^\d+(\.\d+)?$/) ? Number(v) : null));
+	// 		setAttainmentLevel({ level1, level2, level3 });
+	// 	} else {
+	// 		setAttainmentLevel({ level1: null, level2: null, level3: null });
+	// 	}
+	// }
+const [levels, setLevels] = useState({ level1: '', level2: '', level3: '' });
+	const handleInputChange = (event) => {
+		const { name, value } = event.target;
+		setLevels((prevLevels) => ({ ...prevLevels, [name]: value }));
+	};
+
 
 	const handleTargetValueChange = (e) => {
 		const value = parseFloat(e.target.value);
@@ -221,7 +246,16 @@ const GenerateMapping = () => {
 			setIsESEOpen(false);
 		}
 	}
+	const handleTargetValueChanges = (event) => {
+		const value = event.target.value;
 
+		// Allow only numbers (integers or decimals)
+		if (/^\d*\.?\d*$/.test(value)) {
+			setTarget(value);
+		}
+	}
+	
+   
 
 	return (
 		<div className="container">
@@ -287,6 +321,84 @@ const GenerateMapping = () => {
 					<ExcelTable headers={eseHaders} data={eseData} />
 				</div>
 			</div>
+			{/* attainment level */}
+			{/* <div>
+			<div className="mt-4">
+			<h4>Enter Attainment Levels</h4>
+			<input
+				type="text"
+				className="form-control"
+				placeholder="Enter levels for Level 1, Level 2, Level 3 (e.g., 80, 90, 85)"
+				value={inputValue}
+				onChange={handleInputChange}
+			/>
+			<small className="form-text text-muted">
+				Enter three percentages separated .
+			</small>
+
+			<div className="mt-3">
+				<h5>Parsed Attainment Levels:</h5>
+				<p>
+					Level 1: {attainmentLevel.level1 !== null ? `${attainmentLevel.level1}%` : 'Invalid'} | 
+					Level 2: {attainmentLevel.level2 !== null ? `${attainmentLevel.level2}%` : 'Invalid'} | 
+					Level 3: {attainmentLevel.level3 !== null ? `${attainmentLevel.level3}%` : 'Invalid'}
+				</p>
+			</div>
+		</div> */}
+			{/* </div> */}
+
+			<div className="mt-4">
+			<h4>Enter Attainment Levels</h4>
+
+			<div style={{ display: 'flex', flexDirection: 'row', gap: '4rem', marginTop: '1rem' }}>
+				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+					<label htmlFor="level1">Level 1</label>
+					<input
+						type="text"
+						id="level1"
+						name="level1"
+						className="form-control"
+						placeholder="enter level1"
+						value={levels.level1}
+						onChange={handleInputChange}
+						style={{ width: '270px' }}
+					/>
+				</div>
+				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+					<label htmlFor="level2">Level 2</label>
+					<input
+						type="text"
+						id="level2"
+						name="level2"
+						className="form-control"
+						placeholder="enter level2"
+						value={levels.level2}
+						onChange={handleInputChange}
+						style={{ width: '270px' }}
+					/>
+				</div>
+				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+					<label htmlFor="level3">Level 3</label>
+					<input
+						type="text"
+						id="level3"
+						name="level3"
+						className="form-control"
+						placeholder="enter level3"
+						value={levels.level3}
+						onChange={handleInputChange}
+						style={{ width: '270px' }}
+					/>
+				</div>
+			</div>
+
+			<div className="mt-3">
+				<h5>Parsed Attainment Levels:</h5>
+				<p>Level 1: {levels.level1 || 'Not Entered'}</p>
+				<p>Level 2: {levels.level2 || 'Not Entered'}</p>
+				<p>Level 3: {levels.level3 || 'Not Entered'}</p>
+			</div>
+		</div>
 
 			{/* Target Value Input */}
 			<div>
@@ -354,6 +466,22 @@ const GenerateMapping = () => {
 							</div>
 						</div>
 					</div>
+				</div>
+				<div>
+				<div className="mt-4">
+			<h4>Enter Course Exit Form</h4>
+			<input
+				type="text"
+				className="form-control"
+				placeholder="Enter course exit values"
+				value={targetValues}
+				onChange={handleTargetValueChanges}
+			/>
+			<small className="form-text text-muted">
+				This value can include integers or decimals (e.g., 75 or 75.5).
+			</small>
+		</div>
+	
 				</div>
 			</div>
 		</div >
