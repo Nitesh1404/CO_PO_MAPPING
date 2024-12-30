@@ -1,14 +1,24 @@
 import React from 'react';
 
-const About = () => (
-  // <section className="about-section py-5 text-black">
-  //   <div className="container">
-      <h2 className="mb-4">About Us</h2>
-  //     <p>
-  //       This is the About component. Share information about your mission, vision, or team here.
-  //     </p>
-  //   </div>
-  // </section>
-);
+const About = () => {
+  return (
+    <header className="bg-primary text-white text-center py-5 mb-5 shadow-lg">
+      <div className="container">
+        <h1 className="display-4 fw-bold">
+          Welcome to CO-PO Mapping
+        </h1>
+        <p className="lead">
+          Simplifying the alignment of Course Outcomes (CO) with Program Outcomes (PO)
+          for curriculum assessment and accreditation.
+        </p>
+        <div className="d-flex justify-content-center">
+          <a href="#features" className="btn btn-light btn-lg mt-3 d-flex align-items-center justify-content-center">
+            Learn More
+          </a>
+        </div>
+      </div>
+    </header>
+  );
+};
 
 export default About;
