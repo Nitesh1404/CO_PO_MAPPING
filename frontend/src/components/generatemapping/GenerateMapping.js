@@ -1,26 +1,30 @@
-import React, { useState } from 'react';
-import './Button.css'
-import * as XLSX from 'xlsx';
-import Alert from '../alert/Alert';
-import ExcelTable from './exceltable/ExcelTable';
-import DisplayStats from './displayStatistics/DisplayStats';
-import UploadFile from './upload/UploadFile';
-import PreviewModal from './previewModal/PreviewModal';
-import ESE from './formatPhotos/ESE.png';
-import IA1 from './formatPhotos/IAP-1.png';
-import IA2 from './formatPhotos/IAP-2.png';
+import React, { useState } from "react";
+import "./Button.css";
+import * as XLSX from "xlsx";
+import AttainmentTable from "../attainment-table/AttainmentTable";
+import Alert from "../alert/Alert";
+import ExcelTable from "./exceltable/ExcelTable";
+import DisplayStats from "./displayStatistics/DisplayStats";
+import UploadFile from "./upload/UploadFile";
+import PreviewModal from "./previewModal/PreviewModal";
+import ESE from "./formatPhotos/ESE.png";
+import IA1 from "./formatPhotos/IAP-1.png";
+import IA2 from "./formatPhotos/IAP-2.png";
+import InputAttainment from "./attainment-input/InputAttainment";
 // import UploadBG from './formatPhotos/uploadBG.png'
 
 const GenerateMapping = () => {
 	const [ia1Data, setIa1Data] = useState([]);
 	const [ia2Data, setIa2Data] = useState([]);
 	const [eseData, setEseData] = useState([]);
+	const [copoData, setCopoData] = useState([]);
 	const [headers, setHeaders] = useState([]);
+	const [copoHeader, setCopoHeader] = useState([]);
 	const [eseHaders, setEseHeaders] = useState([]);
 	// const [inputValue, setInputValue] = useState('');
 
-	const [targetValue, setTargetValue] = useState('');
-	const[targetValues,setTarget]=useState('');
+	const [targetValue, setTargetValue] = useState("");
+	// const [targetValues, setTarget] = useState('');
 	const [eseStats, setEseStats] = useState({ attempted: 0, scoredAbove: 0 });
 	const [eseAttainmentLevels, setEseAttainmentLevels] = useState({});
 	const [attemptedCounts, setAttemptedCounts] = useState({
@@ -32,13 +36,15 @@ const GenerateMapping = () => {
 		IA2: { CO4: 0, CO5: 0, CO6: 0 },
 	});
 	const [attainmentLevels, setAttainmentLevels] = useState({
-		IA1: { CO1: '', CO2: '', CO3: '' },
-		IA2: { CO4: '', CO5: '', CO6: '' },
+		IA1: { CO1: "", CO2: "", CO3: "" },
+		IA2: { CO4: "", CO5: "", CO6: "" },
 	});
 	const [isIA1Open, setIsIA1Open] = useState(false);
 	const [isIA2Open, setIsIA2Open] = useState(false);
 	const [isESEOpen, setIsESEOpen] = useState(false);
 	// const [previewData, setPreviewData] = useState({ title: "", body: "" });
+	const [DAattainment, setDAattainment] = useState(0);
+	const [IDAattainment, setIDAattainment] = useState(0);
 
 	// Handle IA1 and IA2 uploads
 	const handleFileUpload = (e, ia) => {
@@ -47,16 +53,23 @@ const GenerateMapping = () => {
 			const reader = new FileReader();
 			reader.onload = (event) => {
 				const data = new Uint8Array(event.target.result);
-				const workbook = XLSX.read(data, { type: 'array' });
+				const workbook = XLSX.read(data, { type: "array" });
 				const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-				const jsonData = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
+				const jsonData = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
+
+				// console.log(jsonData);
 
 				if (jsonData.length > 0) {
-					setHeaders(Object.keys(jsonData[0]));
-					if (ia === 'IA1') {
+					if (ia === "IA1") {
+						setHeaders(Object.keys(jsonData[0]));
 						setIa1Data(jsonData);
-					} else if (ia === 'IA2') {
+					} else if (ia === "IA2") {
+						setHeaders(Object.keys(jsonData[0]));
 						setIa2Data(jsonData);
+					} else if (ia === "COPO") {
+						setCopoHeader(Object.keys(jsonData[0]));
+						setCopoData(jsonData);
+						// console.log(copoData);
 					}
 				}
 			};
@@ -71,9 +84,9 @@ const GenerateMapping = () => {
 			const reader = new FileReader();
 			reader.onload = (event) => {
 				const data = new Uint8Array(event.target.result);
-				const workbook = XLSX.read(data, { type: 'array' });
+				const workbook = XLSX.read(data, { type: "array" });
 				const worksheet = workbook.Sheets[workbook.SheetNames[0]];
-				const jsonData = XLSX.utils.sheet_to_json(worksheet, { defval: '' });
+				const jsonData = XLSX.utils.sheet_to_json(worksheet, { defval: "" });
 
 				if (jsonData.length > 0) {
 					setEseHeaders(Object.keys(jsonData[0]));
@@ -99,12 +112,13 @@ const GenerateMapping = () => {
 	// 		setAttainmentLevel({ level1: null, level2: null, level3: null });
 	// 	}
 	// }
-const [levels, setLevels] = useState({ level1: '', level2: '', level3: '' });
+
+	const [levels, setLevels] = useState({ level1: "", level2: "", level3: "" });
+
 	const handleInputChange = (event) => {
 		const { name, value } = event.target;
 		setLevels((prevLevels) => ({ ...prevLevels, [name]: value }));
 	};
-
 
 	const handleTargetValueChange = (e) => {
 		const value = parseFloat(e.target.value);
@@ -125,16 +139,19 @@ const [levels, setLevels] = useState({ level1: '', level2: '', level3: '' });
 
 	const calculateStatistics = (data, iaKey) => {
 		if (!targetValue) {
-			alert('Please set a target value');
+			alert("Please set a target value");
 			return;
 		}
 
-		const attempted = iaKey === 'IA1' ? { CO1: 0, CO2: 0, CO3: 0 } : { CO4: 0, CO5: 0, CO6: 0 };
-		const scoredAbove = iaKey === 'IA1' ? { CO1: 0, CO2: 0, CO3: 0 } : { CO4: 0, CO5: 0, CO6: 0 };
+		const attempted =
+			iaKey === "IA1" ? { CO1: 0, CO2: 0, CO3: 0 } : { CO4: 0, CO5: 0, CO6: 0 };
+		const scoredAbove =
+			iaKey === "IA1" ? { CO1: 0, CO2: 0, CO3: 0 } : { CO4: 0, CO5: 0, CO6: 0 };
 		const targetScore = (targetValue / 100) * 5;
 
 		data.forEach((row) => {
-			const columns = iaKey === 'IA1' ? ['CO1', 'CO2', 'CO3'] : ['CO4', 'CO5', 'CO6'];
+			const columns =
+				iaKey === "IA1" ? ["CO1", "CO2", "CO3"] : ["CO4", "CO5", "CO6"];
 			columns.forEach((co) => {
 				const value = parseFloat(row[co]);
 				if (!isNaN(value) && value > 0) {
@@ -161,18 +178,18 @@ const [levels, setLevels] = useState({ level1: '', level2: '', level3: '' });
 		Object.keys(attempted).forEach((co) => {
 			const percentage = (scoredAbove[co] / attempted[co]) * 100;
 
-			if (percentage >= 50) {
-				updatedAttainmentLevels[iaKey][co] = '3'; // 50% or more
-			} else if (percentage >= 45) {
-				updatedAttainmentLevels[iaKey][co] = '2'; // 45% or more but less than 50%
+			if (percentage >= levels.level3) {
+				updatedAttainmentLevels[iaKey][co] = "3"; // 50% or more
+			} else if (percentage >= levels.level2 && percentage < levels.level3) {
+				updatedAttainmentLevels[iaKey][co] = "2"; // 45% or more but less than 50%
 			} else {
-				updatedAttainmentLevels[iaKey][co] = '1'; // Less than 45%
+				updatedAttainmentLevels[iaKey][co] = "1"; // Less than 45%
 			}
 		});
 
 		setAttainmentLevels(updatedAttainmentLevels);
+		// console.log(updatedAttainmentLevels);
 	};
-
 
 	const calculatePercentage = (co, iaKey) => {
 		const attempted = attemptedCounts[iaKey][co];
@@ -180,10 +197,10 @@ const [levels, setLevels] = useState({ level1: '', level2: '', level3: '' });
 		return attempted === 0 ? 0 : ((scoredAbove / attempted) * 100).toFixed(2);
 	};
 
-	// calculation ESE 
+	// calculation ESE
 	const calculateEseStatistics = (data) => {
 		if (!targetValue) {
-			alert('Please set a target value');
+			alert("Please set a target value");
 			return;
 		}
 
@@ -192,7 +209,7 @@ const [levels, setLevels] = useState({ level1: '', level2: '', level3: '' });
 		const targetScore = (targetValue * 80) / 100; // Assuming ESE is out of 80
 
 		data.forEach((row) => {
-			const marks = parseFloat(row['ESE']); // Assuming 'Marks' column exists
+			const marks = parseFloat(row["ESE"]); // Assuming 'Marks' column exists
 			if (!isNaN(marks) && marks > 0) {
 				attempted += 1;
 				if (marks >= targetScore) {
@@ -205,13 +222,13 @@ const [levels, setLevels] = useState({ level1: '', level2: '', level3: '' });
 
 		// Set attainment level for ESE based on percentage
 		const percentage = (scoredAbove / attempted) * 100;
-		let attainmentLevel = '';
+		let attainmentLevel = "";
 		if (percentage >= 50) {
-			attainmentLevel = '3'; // 50% or more
+			attainmentLevel = "3"; // 50% or more
 		} else if (percentage >= 45) {
-			attainmentLevel = '2'; // 45% or more but less than 50%
+			attainmentLevel = "2"; // 45% or more but less than 50%
 		} else {
-			attainmentLevel = '1'; // Less than 45%
+			attainmentLevel = "1"; // Less than 45%
 		}
 
 		setEseAttainmentLevels({ ESE: attainmentLevel });
@@ -225,37 +242,75 @@ const [levels, setLevels] = useState({ level1: '', level2: '', level3: '' });
 	const showPreviewModal = (name) => {
 		if (name === "IA1") {
 			setIsIA1Open(true);
-		}
-		else if (name === "IA2") {
+		} else if (name === "IA2") {
 			setIsIA2Open(true);
-		}
-		else if (name === "ESE") {
+		} else if (name === "ESE") {
 			setIsESEOpen(true);
 		}
-
-	}
+	};
 
 	const hidePreviewModal = (name) => {
 		if (name === "IA1") {
 			setIsIA1Open(false);
-		}
-		else if (name === "IA2") {
+		} else if (name === "IA2") {
 			setIsIA2Open(false);
-		}
-		else if (name === "ESE") {
+		} else if (name === "ESE") {
 			setIsESEOpen(false);
 		}
-	}
-	const handleTargetValueChanges = (event) => {
-		const value = event.target.value;
+	};
 
-		// Allow only numbers (integers or decimals)
-		if (/^\d*\.?\d*$/.test(value)) {
-			setTarget(value);
+	// const handleTargetValueChanges = (event) => {
+	// 	const value = event.target.value;
+
+	// 	// Allow only numbers (integers or decimals)
+	// 	if (/^\d*\.?\d*$/.test(value)) {
+	// 		setTarget(value);
+	// 	}
+	// }
+
+	const avarageDAAttainment = () => {
+		let sum = 0;
+
+		for (let ia in attainmentLevels) {
+			for (let co in attainmentLevels[ia]) {
+				sum += parseInt(attainmentLevels[ia][co]); // Convert string to number and add
+			}
 		}
-	}
-	
-   
+
+		let Average = (sum + parseInt(eseAttainmentLevels.ESE)) / 7;
+		setDAattainment(Average);
+	};
+
+	const handleIDAattainment = (e) => {
+		const value = e.target.value;
+
+		// Allow empty input
+		if (value === "") {
+			setIDAattainment("");
+			return;
+		}
+
+		// Allow only valid numbers or decimal points
+		const isValid = /^[0-9]*\.?[0-9]*$/.test(value);
+		if (isValid) {
+			setIDAattainment(value); // Keep the input as a string
+		}
+	};
+
+	// Convert the string value to a float when necessary
+	// const getFloatIDAattainment = () => {
+	// 	return parseFloat(IDAattainment) || 0; // Provide a fallback of 0 if invalid
+	// };
+
+	// console.log(copoData);
+
+
+
+
+
+
+
+
 
 	return (
 		<div className="container">
@@ -264,11 +319,23 @@ const [levels, setLevels] = useState({ level1: '', level2: '', level3: '' });
 
 			{/* IA-1 Upload */}
 			<div className="mt-4 ">
-				<h4 className='d-flex justify-content-center align-items-center'>Upload IA-1 Marks
-					<span class="material-symbols-outlined mx-2" style={{ cursor: "pointer" }} onClick={() => showPreviewModal("IA1")}>
+				<h4 className="d-flex justify-content-center align-items-center">
+					Upload IA-1 Marks
+					<span
+						className="material-symbols-outlined mx-2"
+						style={{ cursor: "pointer" }}
+						onClick={() => showPreviewModal("IA1")}
+					>
 						preview
 					</span>
-					{isIA1Open ? <PreviewModal hidePreviewModal={() => hidePreviewModal("IA1")} img={IA1} /> : ""}
+					{isIA1Open ? (
+						<PreviewModal
+							hidePreviewModal={() => hidePreviewModal("IA1")}
+							img={IA1}
+						/>
+					) : (
+						""
+					)}
 				</h4>
 				{/* <input
 					type="file"
@@ -276,7 +343,7 @@ const [levels, setLevels] = useState({ level1: '', level2: '', level3: '' });
 					className="form-control"
 					onChange={(e) => handleFileUpload(e, 'IA1')}
 				/> */}
-				<UploadFile handleUpload={(e) => handleFileUpload(e, 'IA1')} />
+				<UploadFile handleUpload={(e) => handleFileUpload(e, "IA1")} />
 				<div className="container">
 					<ExcelTable headers={headers} data={ia1Data} />
 				</div>
@@ -284,11 +351,21 @@ const [levels, setLevels] = useState({ level1: '', level2: '', level3: '' });
 
 			{/* IA-2 Upload */}
 			<div className="mt-4">
-				<h4 className='d-flex justify-content-center align-items-center'>Upload IA-2 Marks
-					<span class="material-symbols-outlined mx-2" style={{ cursor: "pointer" }} onClick={() => showPreviewModal("IA2")}>
+				<h4 className="d-flex justify-content-center align-items-center">
+					Upload IA-2 Marks
+					<span
+						className="material-symbols-outlined mx-2"
+						style={{ cursor: "pointer" }}
+						onClick={() => showPreviewModal("IA2")}
+					>
 						preview
 					</span>
-					{isIA2Open && <PreviewModal hidePreviewModal={() => hidePreviewModal("IA2")} img={IA2} />}
+					{isIA2Open && (
+						<PreviewModal
+							hidePreviewModal={() => hidePreviewModal("IA2")}
+							img={IA2}
+						/>
+					)}
 				</h4>
 				{/* <input
 					type="file"
@@ -296,19 +373,29 @@ const [levels, setLevels] = useState({ level1: '', level2: '', level3: '' });
 					className="form-control"
 					onChange={(e) => handleFileUpload(e, 'IA2')}
 				/> */}
-				<UploadFile handleUpload={(e) => handleFileUpload(e, 'IA2')} />
+				<UploadFile handleUpload={(e) => handleFileUpload(e, "IA2")} />
 				<div className="container">
 					<ExcelTable headers={headers} data={ia2Data} />
 				</div>
 			</div>
 
-			{/* IA-1 Upload */}
+			{/* ESE Upload */}
 			<div className="mt-4">
-				<h4 className='d-flex justify-content-center align-items-center'>Upload ESE Marks
-					<span class="material-symbols-outlined mx-2" style={{ cursor: "pointer" }} onClick={() => showPreviewModal("ESE")}>
+				<h4 className="d-flex justify-content-center align-items-center">
+					Upload ESE Marks
+					<span
+						className="material-symbols-outlined mx-2"
+						style={{ cursor: "pointer" }}
+						onClick={() => showPreviewModal("ESE")}
+					>
 						preview
 					</span>
-					{isESEOpen && <PreviewModal hidePreviewModal={() => hidePreviewModal("ESE")} img={ESE} />}
+					{isESEOpen && (
+						<PreviewModal
+							hidePreviewModal={() => hidePreviewModal("ESE")}
+							img={ESE}
+						/>
+					)}
 				</h4>
 				{/* <input
 					type="file"
@@ -321,86 +408,33 @@ const [levels, setLevels] = useState({ level1: '', level2: '', level3: '' });
 					<ExcelTable headers={eseHaders} data={eseData} />
 				</div>
 			</div>
-			{/* attainment level */}
-			{/* <div>
-			<div className="mt-4">
-			<h4>Enter Attainment Levels</h4>
-			<input
-				type="text"
-				className="form-control"
-				placeholder="Enter levels for Level 1, Level 2, Level 3 (e.g., 80, 90, 85)"
-				value={inputValue}
-				onChange={handleInputChange}
-			/>
-			<small className="form-text text-muted">
-				Enter three percentages separated .
-			</small>
 
-			<div className="mt-3">
-				<h5>Parsed Attainment Levels:</h5>
-				<p>
-					Level 1: {attainmentLevel.level1 !== null ? `${attainmentLevel.level1}%` : 'Invalid'} | 
-					Level 2: {attainmentLevel.level2 !== null ? `${attainmentLevel.level2}%` : 'Invalid'} | 
-					Level 3: {attainmentLevel.level3 !== null ? `${attainmentLevel.level3}%` : 'Invalid'}
-				</p>
-			</div>
-		</div> */}
-			{/* </div> */}
-
-			<div className="mt-4">
-			<h4>Enter Attainment Levels</h4>
-
-			<div style={{ display: 'flex', flexDirection: 'row', gap: '4rem', marginTop: '1rem' }}>
-				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-					<label htmlFor="level1">Level 1</label>
-					<input
-						type="text"
-						id="level1"
-						name="level1"
-						className="form-control"
-						placeholder="enter level1"
-						value={levels.level1}
-						onChange={handleInputChange}
-						style={{ width: '270px' }}
-					/>
-				</div>
-				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-					<label htmlFor="level2">Level 2</label>
-					<input
-						type="text"
-						id="level2"
-						name="level2"
-						className="form-control"
-						placeholder="enter level2"
-						value={levels.level2}
-						onChange={handleInputChange}
-						style={{ width: '270px' }}
-					/>
-				</div>
-				<div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-					<label htmlFor="level3">Level 3</label>
-					<input
-						type="text"
-						id="level3"
-						name="level3"
-						className="form-control"
-						placeholder="enter level3"
-						value={levels.level3}
-						onChange={handleInputChange}
-						style={{ width: '270px' }}
-					/>
+			{/* CO-PO Upload */}
+			<div className="mt-4 ">
+				<h4 className="d-flex justify-content-center align-items-center">
+					Upload CO-PO Mapping
+					<span
+						className="material-symbols-outlined mx-2"
+						style={{ cursor: "pointer" }}
+						onClick={() => showPreviewModal("IA1")}
+					>
+						preview
+					</span>
+					{/* {isIA1Open ? <PreviewModal hidePreviewModal={() => hidePreviewModal("IA1")} img={IA1} /> : ""} */}
+				</h4>
+				<UploadFile handleUpload={(e) => handleFileUpload(e, "COPO")} />
+				<div className="container">
+					<ExcelTable headers={copoHeader} data={copoData} />
 				</div>
 			</div>
 
-			<div className="mt-3">
-				<h5>Parsed Attainment Levels:</h5>
-				<p>Level 1: {levels.level1 || 'Not Entered'}</p>
-				<p>Level 2: {levels.level2 || 'Not Entered'}</p>
-				<p>Level 3: {levels.level3 || 'Not Entered'}</p>
-			</div>
-		</div>
+			<hr />
 
-			{/* Target Value Input */}
+			{/* handling input for attainment levels */}
+			<InputAttainment handleInputChange={handleInputChange} levels={levels} />
+
+
+			{/* handling Target Value Input */}
 			<div>
 				<div className="mt-4">
 					<h4>Set Target Value (in %)</h4>
@@ -412,79 +446,161 @@ const [levels, setLevels] = useState({ level1: '', level2: '', level3: '' });
 						onChange={handleTargetValueChange}
 					/>
 					<small className="form-text text-muted">
-						This target value will be used to determine how many students scored above the threshold.
+						This target value will be used to determine how many students scored
+						above the threshold.
 					</small>
 				</div>
 
+				<hr />
+
 				{/* Display Statistics */}
-				<div className="mt-4">
+				<div className=" container mt-4">
 					<h4>Statistics</h4>
-					<button className="btn btn-success  mt-2 mb-4 animation" onClick={() => calculateStatistics(ia1Data, 'IA1')}>
-						<i class="animation"></i>Calculate IA-1 Statistics<i class="animation"></i>
+
+					<button
+						className="btn btn-success  mt-2 mb-4 animation"
+						onClick={() => calculateStatistics(ia1Data, "IA1")}
+					>
+						<i className="animation"></i>Calculate IA-1 Statistics
+						<i className="animation"></i>
 					</button>
+
 					<DisplayStats
 						attemptedCounts={attemptedCounts.IA1}
 						scoredAboveTarget={scoredAboveTarget.IA1}
 						attainmentLevels={attainmentLevels.IA1}
-						calculatePercentage={(co) => calculatePercentage(co, 'IA1')}
-						handleAttainmentLevelChange={(e, co) => handleAttainmentLevelChange(e, co, 'IA1')}
+						calculatePercentage={(co) => calculatePercentage(co, "IA1")}
+						handleAttainmentLevelChange={(e, co) =>
+							handleAttainmentLevelChange(e, co, "IA1")
+						}
 						title="IA-1"
-						columns={['CO1', 'CO2', 'CO3']}
+						columns={["CO1", "CO2", "CO3"]}
 					/>
 
-					<button className="btn btn-success mt-2 mb-4" onClick={() => calculateStatistics(ia2Data, 'IA2')}>
-						<i class="animation"></i>Calculate IA-2 Statistics<i class="animation"></i>
+					<button
+						className="btn btn-success mt-2 mb-4"
+						onClick={() => calculateStatistics(ia2Data, "IA2")}
+					>
+						<i className="animation"></i>Calculate IA-2 Statistics
+						<i className="animation"></i>
 					</button>
+
 					<DisplayStats
 						attemptedCounts={attemptedCounts.IA2}
 						scoredAboveTarget={scoredAboveTarget.IA2}
 						attainmentLevels={attainmentLevels.IA2}
-						calculatePercentage={(co) => calculatePercentage(co, 'IA2')}
-						handleAttainmentLevelChange={(e, co) => handleAttainmentLevelChange(e, co, 'IA2')}
+						calculatePercentage={(co) => calculatePercentage(co, "IA2")}
+						handleAttainmentLevelChange={(e, co) =>
+							handleAttainmentLevelChange(e, co, "IA2")
+						}
 						title="IA-2"
-						columns={['CO4', 'CO5', 'CO6']}
+						columns={["CO4", "CO5", "CO6"]}
 					/>
 
 					<button
 						className="btn btn-success mt-2 mb-4"
 						onClick={() => calculateEseStatistics(eseData)}
 					>
-						<i class="animation"></i>Calculate ESE Statistics<i class="animation"></i>
+						<i className="animation"></i>Calculate ESE Statistics
+						<i className="animation"></i>
 					</button>
-					<div>
+
+					<div className="">
 						<h5 className="card-title">ESE Statistics</h5>
-						<div className=" container mt-1 card mb-4" style={{ boxShadow: '1px 1px 8px #84f4d3c2' }}>
-							<div className="card-body" >
-								<p className="card-text"><strong>Attempted:</strong> {eseStats.attempted}</p>
-								<p className="card-text"><strong>Scored Above Target:</strong> {eseStats.scoredAbove}</p>
+						<div
+							className=" container mt-1 card mb-4"
+							style={{ boxShadow: "1px 1px 8px #84f4d3c2" }}
+						>
+							<div className="card-body">
 								<p className="card-text">
-									<strong>Scored Above Target Percentage:</strong> {calculateESEPercentage(eseStats.scoredAbove, eseStats.attempted)}%
+									<strong>Attempted:</strong> {eseStats.attempted}
 								</p>
 								<p className="card-text">
-									<strong>ESE Attainment Level:</strong> {eseAttainmentLevels.ESE || 'Not Calculated'}
+									<strong>Scored Above Target:</strong> {eseStats.scoredAbove}
+								</p>
+								<p className="card-text">
+									<strong>Scored Above Target Percentage:</strong>{" "}
+									{calculateESEPercentage(
+										eseStats.scoredAbove,
+										eseStats.attempted
+									)}
+									%
+								</p>
+								<p className="card-text">
+									<strong>ESE Attainment Level:</strong>{" "}
+									{eseAttainmentLevels.ESE || "Not Calculated"}
 								</p>
 							</div>
 						</div>
 					</div>
 				</div>
+
+				<hr />
+
+				{/* Handling in-direct attainment input  */}
+				<div className="mb-4">
+					<h4>Enter Indirect Attainment</h4>
+					<input
+						type="text"
+						className="form-control"
+						placeholder="Enter course exit values"
+						value={IDAattainment}
+						onChange={handleIDAattainment}
+					/>
+					<small className="form-text text-muted">
+						This value can include integers or decimals.
+					</small>
+				</div>
+
+				{/* handling direct attainment  */}
 				<div>
-				<div className="mt-4">
-			<h4>Enter Course Exit Form</h4>
-			<input
-				type="text"
-				className="form-control"
-				placeholder="Enter course exit values"
-				value={targetValues}
-				onChange={handleTargetValueChanges}
-			/>
-			<small className="form-text text-muted">
-				This value can include integers or decimals (e.g., 75 or 75.5).
-			</small>
-		</div>
-	
+					<button
+						className="btn btn-success  mt-2 mb-4 animation"
+						onClick={avarageDAAttainment}
+					>
+						<i className="animation"></i>Average Attainment Levels
+						<i className="animation"></i>
+					</button>
+				</div>
+
+				<div>
+					<div className=" mb-4">
+						<h4>
+							Direct Attainment:{" "}
+							{DAattainment === 0 ? (
+								<small style={{ fontSize: "16px" }}>not calculated</small>
+							) : (
+								parseFloat(DAattainment.toFixed(2))
+							)}
+						</h4>
+					</div>
+
+					<div className=" mb-4">
+						<h4>
+							Indirect Attainment :{" "}
+							{IDAattainment === 0 ? (
+								<small style={{ fontSize: "16px" }}>not calculated</small>
+							) : (
+								IDAattainment
+							)}{" "}
+						</h4>
+					</div>
 				</div>
 			</div>
-		</div >
+
+			<hr />
+
+			{/* handling co-po-attainemnt table / mapping  */}
+			<AttainmentTable
+				copoData={copoData[5]}
+				DA={DAattainment}
+				IDA={IDAattainment}
+			/>
+
+
+		</div>
+
+
 	);
 };
 

@@ -4,7 +4,7 @@ import './Upload.css'
 const UploadFile = ({ handleUpload }) => {
 	return (
 		<div className='container'>
-			<button class="container-btn-file form-control">
+			<button className="container-btn-file form-control">
 				<svg
 					fill="#fff"
 					xmlns="http://www.w3.org/2000/svg"
@@ -34,7 +34,7 @@ const UploadFile = ({ handleUpload }) => {
 					></path>
 				</svg>
 				Upload File
-				<input class="file" accept='.xls,.xlsx' onChange={handleUpload} name="text" type="file" />
+				<input className="file" accept='.xls,.xlsx' onChange={handleUpload} name="text" type="file" />
 			</button>
 
 		</div>

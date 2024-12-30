@@ -21,7 +21,7 @@ const Home = () => {
               Simplifying the alignment of Course Outcomes (CO) with Program
               Outcomes (PO) for curriculum assessment and accreditation.
             </p>
-            <a href="#features" className="btn btn-light btn-lg mt-3">
+            <a href="#features" className="btn btn-light btn-lg mt-3 ">
               Learn More
             </a>
           </div>
