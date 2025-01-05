@@ -12,22 +12,22 @@ const DisplayStats = ({
 	return (
 		<div>
 			<h4>{title} CO Statistics</h4>
-			<div className="row">
+			<div className="row custom-font">
 				{columns.map((co) => (
 					<div className="col-md-4" key={co}>
 						<div className="card mb-4  rounded" style={{ boxShadow: '1px 1px 8px #84f4d3c2' }}>
 							<div className="card-body">
 								<h5 className="card-title">{co}</h5>
-								<p className="card-text">
+								<p className="card-text custom-font">
 									<strong>Students Attempted:</strong> {attemptedCounts[co]}
 								</p>
-								<p className="card-text">
+								<p className="card-text custom-font">
 									<strong>Students Scored Above Target:</strong> {scoredAboveTarget[co]}
 								</p>
-								<p className="card-text">
+								<p className="card-text custom-font">
 									<strong>Percentage of Students Above Target:</strong> {calculatePercentage(co)}%
 								</p>
-								<div className="form-group">
+								<div className="form-group custom-font">
 									<p className='card-text'><strong>Attainment Level: </strong> {attainmentLevels[co]}</p>
 								</div>
 							</div>
