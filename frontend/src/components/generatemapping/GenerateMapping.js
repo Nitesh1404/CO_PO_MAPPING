@@ -259,12 +259,12 @@ const [levels, setLevels] = useState({ level1: '', level2: '', level3: '' });
 
 	return (
 		<div className="container">
-			<h2 className="mt-3">Generate Mapping</h2>
+			<h2 className="mt-3 custom-font">Generate Mapping</h2>
 			<Alert />
 
 			{/* IA-1 Upload */}
 			<div className="mt-4 ">
-				<h4 className='d-flex justify-content-center align-items-center'>Upload IA-1 Marks
+				<h4 className='d-flex justify-content-center align-items-center custom-font'>Upload IA-1 Marks
 					<span class="material-symbols-outlined mx-2" style={{ cursor: "pointer" }} onClick={() => showPreviewModal("IA1")}>
 						preview
 					</span>
@@ -347,7 +347,7 @@ const [levels, setLevels] = useState({ level1: '', level2: '', level3: '' });
 		</div> */}
 			{/* </div> */}
 
-			<div className="mt-4">
+			<div className="mt-4 custom-font">
 			<h4>Enter Attainment Levels</h4>
 
 			<div style={{ display: 'flex', flexDirection: 'row', gap: '4rem', marginTop: '1rem' }}>
@@ -402,7 +402,7 @@ const [levels, setLevels] = useState({ level1: '', level2: '', level3: '' });
 
 			{/* Target Value Input */}
 			<div>
-				<div className="mt-4">
+				<div className="mt-4 custom-font">
 					<h4>Set Target Value (in %)</h4>
 					<input
 						type="number"
@@ -417,9 +417,9 @@ const [levels, setLevels] = useState({ level1: '', level2: '', level3: '' });
 				</div>
 
 				{/* Display Statistics */}
-				<div className="mt-4">
+				<div className="mt-4 custom-font">
 					<h4>Statistics</h4>
-					<button className="btn btn-success  mt-2 mb-4 animation" onClick={() => calculateStatistics(ia1Data, 'IA1')}>
+					<button className="btn btn-success  mt-1 mb-4 animation custom-font" onClick={() => calculateStatistics(ia1Data, 'IA1')}>
 						<i class="animation"></i>Calculate IA-1 Statistics<i class="animation"></i>
 					</button>
 					<DisplayStats
@@ -432,7 +432,7 @@ const [levels, setLevels] = useState({ level1: '', level2: '', level3: '' });
 						columns={['CO1', 'CO2', 'CO3']}
 					/>
 
-					<button className="btn btn-success mt-2 mb-4" onClick={() => calculateStatistics(ia2Data, 'IA2')}>
+					<button className="btn btn-success mt-2 mb-4 custom-font" onClick={() => calculateStatistics(ia2Data, 'IA2')}>
 						<i class="animation"></i>Calculate IA-2 Statistics<i class="animation"></i>
 					</button>
 					<DisplayStats
@@ -446,14 +446,14 @@ const [levels, setLevels] = useState({ level1: '', level2: '', level3: '' });
 					/>
 
 					<button
-						className="btn btn-success mt-2 mb-4"
+						className="btn btn-success mt-2 mb-4 custom-font"
 						onClick={() => calculateEseStatistics(eseData)}
 					>
 						<i class="animation"></i>Calculate ESE Statistics<i class="animation"></i>
 					</button>
 					<div>
 						<h5 className="card-title">ESE Statistics</h5>
-						<div className=" container mt-1 card mb-4" style={{ boxShadow: '1px 1px 8px #84f4d3c2' }}>
+						<div className=" container mt-1 card mb-4 custom-font" style={{ boxShadow: '1px 1px 8px #84f4d3c2' }}>
 							<div className="card-body" >
 								<p className="card-text"><strong>Attempted:</strong> {eseStats.attempted}</p>
 								<p className="card-text"><strong>Scored Above Target:</strong> {eseStats.scoredAbove}</p>
@@ -477,7 +477,7 @@ const [levels, setLevels] = useState({ level1: '', level2: '', level3: '' });
 				value={targetValues}
 				onChange={handleTargetValueChanges}
 			/>
-			<small className="form-text text-muted">
+			<small className="form-text text-muted custom-font">
 				This value can include integers or decimals (e.g., 75 or 75.5).
 			</small>
 		</div>
