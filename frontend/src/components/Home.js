@@ -32,7 +32,7 @@ const Home = () => {
         {/* Image Information Here  */}
         <section className="py-5 bg-secondary text-white shadow-lg">
           <div className="container">
-            <h2 className="text-center mb-4 fw-bold">How It Works</h2>
+            <h2 className="text-center mb-4 fw-bold custom-font">How It Works</h2>
             <div className="row align-items-start">
               <div className="col-md-6 mb-4">
                 <img
@@ -47,7 +47,7 @@ const Home = () => {
                     1
                   </div>
                   <div>
-                    <h5 className="fw-bold">Input Data</h5>
+                    <h5 className="fw-bold custom-font">Input Data</h5>
                     <p>Enter the Course Outcomes (COs) and Program Outcomes (POs).</p>
                   </div>
                 </div>
@@ -56,7 +56,7 @@ const Home = () => {
                     2
                   </div>
                   <div>
-                    <h5 className="fw-bold">Automated Mapping</h5>
+                    <h5 className="fw-bold custom-font">    Automated Mapping</h5>
                     <p>Our tool maps COs to POs based on predefined criteria.</p>
                   </div>
                 </div>
@@ -65,7 +65,7 @@ const Home = () => {
                     3
                   </div>
                   <div>
-                    <h5 className="fw-bold">Generate Reports</h5>
+                    <h5 className="fw-bold custom-font">Generate Reports</h5>
                     <p>Download comprehensive reports for evaluation and accreditation.</p>
                   </div>
                 </div>
@@ -87,10 +87,10 @@ const Home = () => {
           <div className="container">
             <section id="about" className="py-5 bg-light shadow-lg">
               <div className="container">
-                <h2 className="text-center fw-bold mb-4">
+                <h2 className="text-center fw-bold mb-4" style={{ fontFamily: 'Kanit, sans-serif'}}>
                   About CO-PO Mapping
                 </h2>
-                <p className="text-center text-muted mb-5">
+                <p className="text-center text-muted mb-2 custom-font">
                   Course Outcomes:- (COs) are what the student should be able to
                   do at the end of a course. The most important aspect of a CO
                   is that it should be observable and measurable. <br /> Program outcomes:- POS are statements that describe what the
@@ -101,16 +101,16 @@ const Home = () => {
                   present POs are 12 in number and they are identified by NBA
                   and are applicable to all engineering programs.
                 </p>
-
+                 <br></br>
                 <div className="row">
                   {/* Introduction */}
                   <div className="col-lg-4 mb-4">
                     <div className="card shadow-sm border-0 h-100">
                       <div className="card-body">
-                        <h5 className="card-title fw-bold">
+                        <h5 className="card-title fw-bold custom-font">
                           What is CO-PO Mapping?
                         </h5>
-                        <p className="card-text">
+                        <p className="card-text custom-font">
                           The "COs-POs-Mapping," is a sophisticated grading
                           system designed to empower educators in evaluating and
                           enhancing student performance. This comprehensive
@@ -127,10 +127,10 @@ const Home = () => {
                   <div className="col-lg-4 mb-4">
                     <div className="card shadow-sm border-0 h-100">
                       <div className="card-body">
-                        <h5 className="card-title fw-bold">
+                        <h5 className="card-title fw-bold custom-font">
                           Why is it Important?
                         </h5>
-                        <p className="card-text">
+                        <p className="card-text custom-font">
                           It ensures curriculum coherence, enhances student
                           learning outcomes, and simplifies the accreditation
                           process by providing structured evidence of program
@@ -144,7 +144,7 @@ const Home = () => {
                   <div className="col-lg-4 mb-4">
                     <div className="card shadow-sm border-0 h-100">
                       <div className="card-body">
-                        <h5 className="card-title fw-bold">Key Benefits</h5>
+                        <h5 className="card-title fw-bold custom-font">Key Benefits</h5>
                         <ul className="list-unstyled">
                           <li>✔ Data-driven insights for improvement</li>
                           <li>✔ Simplified accreditation process</li>

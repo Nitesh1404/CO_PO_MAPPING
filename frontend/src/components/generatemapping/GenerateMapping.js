@@ -24,7 +24,7 @@ const GenerateMapping = () => {
 	// const [inputValue, setInputValue] = useState('');
 
 	const [targetValue, setTargetValue] = useState("");
-	// const [targetValues, setTarget] = useState('');
+	const [targetValues, setTarget] = useState('');
 	const [eseStats, setEseStats] = useState({ attempted: 0, scoredAbove: 0 });
 	const [eseAttainmentLevels, setEseAttainmentLevels] = useState({});
 	const [attemptedCounts, setAttemptedCounts] = useState({
@@ -259,14 +259,14 @@ const GenerateMapping = () => {
 		}
 	};
 
-	// const handleTargetValueChanges = (event) => {
-	// 	const value = event.target.value;
+	const handleTargetValueChanges = (event) => {
+		const value = event.target.value;
 
-	// 	// Allow only numbers (integers or decimals)
-	// 	if (/^\d*\.?\d*$/.test(value)) {
-	// 		setTarget(value);
-	// 	}
-	// }
+		// Allow only numbers (integers or decimals)
+		if (/^\d*\.?\d*$/.test(value)) {
+			setTarget(value);
+		}
+	}
 
 	const avarageDAAttainment = () => {
 		let sum = 0;
@@ -314,43 +314,36 @@ const GenerateMapping = () => {
 
 	return (
 		<div className="container">
-			<h2 className="mt-3">Generate Mapping</h2>
+			<h2 className="mt-3 custom-font">Generate Mapping</h2>
 			<Alert />
 
 			{/* IA-1 Upload */}
-			<div className="mt-4 ">
-				<h4 className="d-flex justify-content-center align-items-center">
-					Upload IA-1 Marks
-					<span
-						className="material-symbols-outlined mx-2"
-						style={{ cursor: "pointer" }}
-						onClick={() => showPreviewModal("IA1")}
-					>
-						preview
-					</span>
-					{isIA1Open ? (
-						<PreviewModal
-							hidePreviewModal={() => hidePreviewModal("IA1")}
-							img={IA1}
-						/>
-					) : (
-						""
-					)}
-				</h4>
-				{/* <input
+			<h4 className='d-flex justify-content-center align-items-center custom-font'>Upload IA-1 Marks
+				<span class="material-symbols-outlined mx-2" style={{ cursor: "pointer" }} onClick={() => showPreviewModal("IA1")}>
+					preview
+				</span>
+				{isIA1Open ? (
+					<PreviewModal
+						hidePreviewModal={() => hidePreviewModal("IA1")}
+						img={IA1}
+					/>
+				) : (
+					""
+				)}
+			</h4>
+			{/* <input
 					type="file"
 					accept=".xls,.xlsx"
 					className="form-control"
 					onChange={(e) => handleFileUpload(e, 'IA1')}
 				/> */}
-				<UploadFile handleUpload={(e) => handleFileUpload(e, "IA1")} />
-				<div className="container">
-					<ExcelTable headers={headers} data={ia1Data} />
-				</div>
+			<UploadFile handleUpload={(e) => handleFileUpload(e, "IA1")} />
+			<div className="container">
+				<ExcelTable headers={headers} data={ia1Data} />
 			</div>
 
 			{/* IA-2 Upload */}
-			<div className="mt-4">
+			<div>
 				<h4 className="d-flex justify-content-center align-items-center">
 					Upload IA-2 Marks
 					<span
@@ -377,10 +370,10 @@ const GenerateMapping = () => {
 				<div className="container">
 					<ExcelTable headers={headers} data={ia2Data} />
 				</div>
-			</div>
+			</div >
 
 			{/* ESE Upload */}
-			<div className="mt-4">
+			< div className="mt-4" >
 				<h4 className="d-flex justify-content-center align-items-center">
 					Upload ESE Marks
 					<span
@@ -407,10 +400,11 @@ const GenerateMapping = () => {
 				<div className="container">
 					<ExcelTable headers={eseHaders} data={eseData} />
 				</div>
-			</div>
+			</ div>
+
 
 			{/* CO-PO Upload */}
-			<div className="mt-4 ">
+			< div className="mt-4 " >
 				<h4 className="d-flex justify-content-center align-items-center">
 					Upload CO-PO Mapping
 					<span
@@ -425,180 +419,185 @@ const GenerateMapping = () => {
 				<UploadFile handleUpload={(e) => handleFileUpload(e, "COPO")} />
 				<div className="container">
 					<ExcelTable headers={copoHeader} data={copoData} />
-				</div>
-			</div>
-
-			<hr />
-
-			{/* handling input for attainment levels */}
-			<InputAttainment handleInputChange={handleInputChange} levels={levels} />
 
 
-			{/* handling Target Value Input */}
-			<div>
-				<div className="mt-4">
-					<h4>Set Target Value (in %)</h4>
-					<input
-						type="number"
-						className="form-control"
-						placeholder="Enter target value as a percentage (e.g., 40)"
-						value={targetValue}
-						onChange={handleTargetValueChange}
-					/>
-					<small className="form-text text-muted">
-						This target value will be used to determine how many students scored
-						above the threshold.
-					</small>
-				</div>
+					<hr />
 
-				<hr />
+					{/* handling input for attainment levels */}
+					<InputAttainment handleInputChange={handleInputChange} levels={levels} />
 
-				{/* Display Statistics */}
-				<div className=" container mt-4">
-					<h4>Statistics</h4>
 
-					<button
-						className="btn btn-success  mt-2 mb-4 animation"
-						onClick={() => calculateStatistics(ia1Data, "IA1")}
-					>
-						<i className="animation"></i>Calculate IA-1 Statistics
-						<i className="animation"></i>
-					</button>
+					{/* handling Target Value Input */}
+					<div>
+						<div className="mt-4 custom-font">
+							<h4>Set Target Value (in %)</h4>
+							<input
+								type="number"
+								className="form-control"
+								placeholder="Enter target value as a percentage (e.g., 40)"
+								value={targetValue}
+								onChange={handleTargetValueChange}
+							/>
+							<small className="form-text text-muted">
+								This target value will be used to determine how many students scored
+								above the threshold.
+							</small>
+						</div>
 
-					<DisplayStats
-						attemptedCounts={attemptedCounts.IA1}
-						scoredAboveTarget={scoredAboveTarget.IA1}
-						attainmentLevels={attainmentLevels.IA1}
-						calculatePercentage={(co) => calculatePercentage(co, "IA1")}
-						handleAttainmentLevelChange={(e, co) =>
-							handleAttainmentLevelChange(e, co, "IA1")
-						}
-						title="IA-1"
-						columns={["CO1", "CO2", "CO3"]}
-					/>
+						<hr />
 
-					<button
-						className="btn btn-success mt-2 mb-4"
-						onClick={() => calculateStatistics(ia2Data, "IA2")}
-					>
-						<i className="animation"></i>Calculate IA-2 Statistics
-						<i className="animation"></i>
-					</button>
+						{/* Display Statistics */}
+						<div className="mt-4 custom-font">
+							<h4>Statistics</h4>
+							<button className="btn btn-success  mt-1 mb-4 animation custom-font" onClick={() => calculateStatistics(ia1Data, 'IA1')}>
+								<i class="animation"></i>Calculate IA-1 Statistics<i class="animation"></i>
+							</button>
 
-					<DisplayStats
-						attemptedCounts={attemptedCounts.IA2}
-						scoredAboveTarget={scoredAboveTarget.IA2}
-						attainmentLevels={attainmentLevels.IA2}
-						calculatePercentage={(co) => calculatePercentage(co, "IA2")}
-						handleAttainmentLevelChange={(e, co) =>
-							handleAttainmentLevelChange(e, co, "IA2")
-						}
-						title="IA-2"
-						columns={["CO4", "CO5", "CO6"]}
-					/>
+							<DisplayStats
+								attemptedCounts={attemptedCounts.IA1}
+								scoredAboveTarget={scoredAboveTarget.IA1}
+								attainmentLevels={attainmentLevels.IA1}
+								calculatePercentage={(co) => calculatePercentage(co, "IA1")}
+								handleAttainmentLevelChange={(e, co) =>
+									handleAttainmentLevelChange(e, co, "IA1")
+								}
+								title="IA-1"
+								columns={["CO1", "CO2", "CO3"]}
+							/>
+							<button className="btn btn-success mt-2 mb-4 custom-font" onClick={() => calculateStatistics(ia2Data, 'IA2')}>
+								<i class="animation"></i>Calculate IA-2 Statistics<i class="animation"></i>
+							</button>
 
-					<button
-						className="btn btn-success mt-2 mb-4"
-						onClick={() => calculateEseStatistics(eseData)}
-					>
-						<i className="animation"></i>Calculate ESE Statistics
-						<i className="animation"></i>
-					</button>
+							<DisplayStats
+								attemptedCounts={attemptedCounts.IA2}
+								scoredAboveTarget={scoredAboveTarget.IA2}
+								attainmentLevels={attainmentLevels.IA2}
+								calculatePercentage={(co) => calculatePercentage(co, "IA2")}
+								handleAttainmentLevelChange={(e, co) =>
+									handleAttainmentLevelChange(e, co, "IA2")
+								}
+								title="IA-2"
+								columns={["CO4", "CO5", "CO6"]}
+							/>
 
-					<div className="">
-						<h5 className="card-title">ESE Statistics</h5>
-						<div
-							className=" container mt-1 card mb-4"
-							style={{ boxShadow: "1px 1px 8px #84f4d3c2" }}
-						>
-							<div className="card-body">
-								<p className="card-text">
-									<strong>Attempted:</strong> {eseStats.attempted}
-								</p>
-								<p className="card-text">
-									<strong>Scored Above Target:</strong> {eseStats.scoredAbove}
-								</p>
-								<p className="card-text">
-									<strong>Scored Above Target Percentage:</strong>{" "}
-									{calculateESEPercentage(
-										eseStats.scoredAbove,
-										eseStats.attempted
-									)}
-									%
-								</p>
-								<p className="card-text">
-									<strong>ESE Attainment Level:</strong>{" "}
-									{eseAttainmentLevels.ESE || "Not Calculated"}
-								</p>
+							<button
+								className="btn btn-success mt-2 mb-4 custom-font"
+								onClick={() => calculateEseStatistics(eseData)}
+							>
+								<i className="animation"></i>Calculate ESE Statistics
+								<i className="animation"></i>
+							</button>
+
+							<div className="">
+								<h5 className="card-title">ESE Statistics</h5>
+								<div className=" container mt-1 card mb-4 custom-font" style={{ boxShadow: '1px 1px 8px #84f4d3c2' }}>
+									<div className="card-body" >
+										<p className="card-text"><strong>Attempted:</strong> {eseStats.attempted}</p>
+										<p className="card-text"><strong>Scored Above Target:</strong> {eseStats.scoredAbove}</p>
+										<p className="card-text">
+											<strong>Attempted:</strong> {eseStats.attempted}
+										</p>
+										<p className="card-text">
+											<strong>Scored Above Target:</strong> {eseStats.scoredAbove}
+										</p>
+										<p className="card-text">
+											<strong>Scored Above Target Percentage:</strong>{" "}
+											{calculateESEPercentage(
+												eseStats.scoredAbove,
+												eseStats.attempted
+											)}
+											%
+										</p>
+										<p className="card-text">
+											<strong>ESE Attainment Level:</strong>{" "}
+											{eseAttainmentLevels.ESE || "Not Calculated"}
+										</p>
+									</div>
+								</div>
 							</div>
 						</div>
-					</div>
-				</div>
 
-				<hr />
+						<hr />
 
-				{/* Handling in-direct attainment input  */}
-				<div className="mb-4">
-					<h4>Enter Indirect Attainment</h4>
-					<input
-						type="text"
-						className="form-control"
-						placeholder="Enter course exit values"
-						value={IDAattainment}
-						onChange={handleIDAattainment}
+						{/* Handling in-direct attainment input  */}
+						<div className="mb-4">
+							<h4>Enter Indirect Attainment</h4>
+							<input
+								type="text"
+								className="form-control"
+								placeholder="Enter course exit values"
+								value={IDAattainment}
+								onChange={handleIDAattainment}
+							/>
+							<small className="form-text text-muted">
+								This value can include integers or decimals.
+							</small>
+						</div>
+
+						{/* handling direct attainment  */}
+						<div>
+							<button
+								className="btn btn-success  mt-2 mb-4 animation"
+								onClick={avarageDAAttainment}
+							>
+								<i className="animation"></i>Average Attainment Levels
+								<i className="animation"></i>
+							</button>
+						</div >
+
+						<div>
+							<div className=" mb-4">
+								<h4>
+									Direct Attainment:{" "}
+									{DAattainment === 0 ? (
+										<small style={{ fontSize: "16px" }}>not calculated</small>
+									) : (
+										parseFloat(DAattainment.toFixed(2))
+									)}
+								</h4>
+							</div>
+
+							<div className=" mb-4">
+								<h4>
+									Indirect Attainment :{" "}
+									{IDAattainment === 0 ? (
+										<small style={{ fontSize: "16px" }}>not calculated</small>
+									) : (
+										IDAattainment
+									)}{" "}
+								</h4>
+							</div>
+
+							<div className="mt-4">
+								<h4>Enter Course Exit Form</h4>
+								<input
+									type="text"
+									className="form-control"
+									placeholder="Enter course exit values"
+									value={targetValues}
+									onChange={handleTargetValueChanges}
+								/>
+								<small className="form-text text-muted custom-font">
+									This value can include integers or decimals (e.g., 75 or 75.5).
+								</small>
+							</div>
+
+						</div>
+					</div >
+
+					<hr />
+
+					{/* handling co-po-attainemnt table / mapping  */}
+					<AttainmentTable
+						copoData={copoData[5]}
+						DA={DAattainment}
+						IDA={IDAattainment}
 					/>
-					<small className="form-text text-muted">
-						This value can include integers or decimals.
-					</small>
-				</div>
-
-				{/* handling direct attainment  */}
-				<div>
-					<button
-						className="btn btn-success  mt-2 mb-4 animation"
-						onClick={avarageDAAttainment}
-					>
-						<i className="animation"></i>Average Attainment Levels
-						<i className="animation"></i>
-					</button>
-				</div>
-
-				<div>
-					<div className=" mb-4">
-						<h4>
-							Direct Attainment:{" "}
-							{DAattainment === 0 ? (
-								<small style={{ fontSize: "16px" }}>not calculated</small>
-							) : (
-								parseFloat(DAattainment.toFixed(2))
-							)}
-						</h4>
-					</div>
-
-					<div className=" mb-4">
-						<h4>
-							Indirect Attainment :{" "}
-							{IDAattainment === 0 ? (
-								<small style={{ fontSize: "16px" }}>not calculated</small>
-							) : (
-								IDAattainment
-							)}{" "}
-						</h4>
-					</div>
-				</div>
-			</div>
-
-			<hr />
-
-			{/* handling co-po-attainemnt table / mapping  */}
-			<AttainmentTable
-				copoData={copoData[5]}
-				DA={DAattainment}
-				IDA={IDAattainment}
-			/>
 
 
-		</div>
+				</div >
+			</div >
+		</div >
 
 
 	);

@@ -21,14 +21,12 @@ function Navbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <Link className="nav-link text-dark" to="/">Home</Link>
+              <Link className="nav-link text-dark custom-font" to="/">Home</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link text-dark" to="/generate-mapping">Generate Mapping</Link>
+              <Link className="nav-link text-dark custom-font" to="/generate-mapping">Generate Mapping</Link>
             </li>
-            <li className="nav-item">
-              <Link className="nav-link text-dark" to="/access-mapping">Access Mapping</Link>
-            </li>
+           
           </ul>
         </div>
       </div>
@@ -37,5 +35,3 @@ function Navbar() {
 }
 
 export default Navbar;
-
-
