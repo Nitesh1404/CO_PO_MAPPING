@@ -24,7 +24,7 @@ const GenerateMapping = () => {
 	// const [inputValue, setInputValue] = useState('');
 
 	const [targetValue, setTargetValue] = useState("");
-	const [targetValues, setTarget] = useState('');
+	// const [targetValues, setTarget] = useState('');
 	const [eseStats, setEseStats] = useState({ attempted: 0, scoredAbove: 0 });
 	const [eseAttainmentLevels, setEseAttainmentLevels] = useState({});
 	const [attemptedCounts, setAttemptedCounts] = useState({
@@ -259,14 +259,14 @@ const GenerateMapping = () => {
 		}
 	};
 
-	const handleTargetValueChanges = (event) => {
-		const value = event.target.value;
+	// const handleTargetValueChanges = (event) => {
+	// 	const value = event.target.value;
 
-		// Allow only numbers (integers or decimals)
-		if (/^\d*\.?\d*$/.test(value)) {
-			setTarget(value);
-		}
-	}
+	// 	// Allow only numbers (integers or decimals)
+	// 	if (/^\d*\.?\d*$/.test(value)) {
+	// 		setTarget(value);
+	// 	}
+	// }
 
 	const avarageDAAttainment = () => {
 		let sum = 0;
@@ -566,20 +566,6 @@ const GenerateMapping = () => {
 										IDAattainment
 									)}{" "}
 								</h4>
-							</div>
-
-							<div className="mt-4">
-								<h4>Enter Course Exit Form</h4>
-								<input
-									type="text"
-									className="form-control"
-									placeholder="Enter course exit values"
-									value={targetValues}
-									onChange={handleTargetValueChanges}
-								/>
-								<small className="form-text text-muted custom-font">
-									This value can include integers or decimals (e.g., 75 or 75.5).
-								</small>
 							</div>
 
 						</div>
