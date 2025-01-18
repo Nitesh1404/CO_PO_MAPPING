@@ -11,6 +11,8 @@ import ESE from "./formatPhotos/ESE.png";
 import IA1 from "./formatPhotos/IAP-1.png";
 import IA2 from "./formatPhotos/IAP-2.png";
 import InputAttainment from "./attainment-input/InputAttainment";
+import SubjectInput from "./subject-input/SubjectInput";
+import AddtoDB from "./add-to-Db/AddtoDB";
 // import UploadBG from './formatPhotos/uploadBG.png'
 
 const GenerateMapping = () => {
@@ -45,6 +47,22 @@ const GenerateMapping = () => {
 	// const [previewData, setPreviewData] = useState({ title: "", body: "" });
 	const [DAattainment, setDAattainment] = useState(0);
 	const [IDAattainment, setIDAattainment] = useState(0);
+
+	// for subject-input
+	const [formData, setFormData] = useState({
+		subjectName: "",
+		subjectCode: "",
+		academicYear: "",
+		year: "",
+		semester: "",
+	});
+
+	// Initial table structure for attainment table
+	const [data, setData] = useState([
+		{ id: 'DA', PO1: 0, PO2: 0, PO3: 0, PO4: 0, PO5: 0, PO6: 0, PO7: 0, PO8: 0, PO9: 0, PO10: 0, PO11: 0, PO12: 0, PSO1: 0, PSO2: 0, PSO3: 0 },
+		{ id: 'IDA', PO1: 0, PO2: 0, PO3: 0, PO4: 0, PO5: 0, PO6: 0, PO7: 0, PO8: 0, PO9: 0, PO10: 0, PO11: 0, PO12: 0, PSO1: 0, PSO2: 0, PSO3: 0 },
+		{ id: 'FINAL ATTAINMENT', PO1: 0, PO2: 0, PO3: 0, PO4: 0, PO5: 0, PO6: 0, PO7: 0, PO8: 0, PO9: 0, PO10: 0, PO11: 0, PO12: 0, PSO1: 0, PSO2: 0, PSO3: 0 },
+	]);
 
 	// Handle IA1 and IA2 uploads
 	const handleFileUpload = (e, ia) => {
@@ -315,6 +333,7 @@ const GenerateMapping = () => {
 	return (
 		<div className="container">
 			<h2 className="mt-3 custom-font">Generate Mapping</h2>
+			<SubjectInput formData={formData} setFormData={setFormData} />
 			<Alert />
 
 			{/* IA-1 Upload */}
@@ -578,11 +597,14 @@ const GenerateMapping = () => {
 						copoData={copoData[5]}
 						DA={DAattainment}
 						IDA={IDAattainment}
+						data={data}
+						setData={setData}
 					/>
-
 
 				</div >
 			</div >
+
+			<AddtoDB attainmentData={data} formData={formData} />
 		</div >
 
 

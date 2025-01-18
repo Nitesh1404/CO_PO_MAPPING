@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const URI = "mongodb://localhost:27017/COPO_System";
+const URI = "mongodb://127.0.0.1:27017/COPO_System";
 
 const connectToMongoDb = () => {
 	mongoose.connect(URI);
