@@ -12,7 +12,7 @@ const App = () => (
   <div className="d-flex flex-column min-vh-100">
     <Navbar />
 
-    <div className="container mt-3 flex-grow-1 custom-scroll shadow-lg">
+    <div className="container mt-3 flex-grow-1 custom-scroll">
       <Routes>
         {/* Route for Home Page */}
         <Route path="/" element={<Home />} />

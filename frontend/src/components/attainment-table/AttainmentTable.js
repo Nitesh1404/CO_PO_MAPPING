@@ -1,12 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-const TableComponent = ({ copoData, DA, IDA }) => {
-	// Initial table structure
-	const [data, setData] = useState([
-		{ id: 'DA', PO1: 0, PO2: 0, PO3: 0, PO4: 0, PO5: 0, PO6: 0, PO7: 0, PO8: 0, PO9: 0, PO10: 0, PO11: 0, PO12: 0, PSO1: 0, PSO2: 0, PSO3: 0 },
-		{ id: 'IDA', PO1: 0, PO2: 0, PO3: 0, PO4: 0, PO5: 0, PO6: 0, PO7: 0, PO8: 0, PO9: 0, PO10: 0, PO11: 0, PO12: 0, PSO1: 0, PSO2: 0, PSO3: 0 },
-		{ id: 'FINAL ATTAINMENT', PO1: 0, PO2: 0, PO3: 0, PO4: 0, PO5: 0, PO6: 0, PO7: 0, PO8: 0, PO9: 0, PO10: 0, PO11: 0, PO12: 0, PSO1: 0, PSO2: 0, PSO3: 0 },
-	]);
+const TableComponent = ({ copoData, DA, IDA, data, setData }) => {
 	const [submitClicked, setSubmitClicked] = useState(false); // Track if the button is clicked
 
 	const average = (Number(DA) + Number(IDA)) / 2;
@@ -17,32 +11,27 @@ const TableComponent = ({ copoData, DA, IDA }) => {
 			setData((prevData) =>
 				prevData.map((row) => {
 					if (row.id === 'DA') {
-						// Assign DA values for keys with non-zero copoData
 						Object.entries(copoData).forEach(([key, value]) => {
-							if ((value > 0) && ((key.startsWith('PO')) || (key.startsWith('PSO')))) {
+							if (value > 0 && (key.startsWith('PO') || key.startsWith('PSO'))) {
 								row[key] = parseFloat(DA.toFixed(2));
 							}
 						});
 					} else if (row.id === 'IDA') {
-						// Assign IDA values for keys with non-zero copoData
 						Object.entries(copoData).forEach(([key, value]) => {
-							if ((value > 0) && (key.startsWith('PO') || key.startsWith('PSO'))) {
+							if (value > 0 && (key.startsWith('PO') || key.startsWith('PSO'))) {
 								row[key] = IDA;
 							}
 						});
-					}
-					else if (row.id === 'FINAL ATTAINMENT') {
+					} else if (row.id === 'FINAL ATTAINMENT') {
 						Object.entries(copoData).forEach(([key, value]) => {
 							const roundVal = Math.round(value);
-							if ((roundVal > 0) && ((key.startsWith('PO')) || (key.startsWith('PSO')))) {
+							if (roundVal > 0 && (key.startsWith('PO') || key.startsWith('PSO'))) {
 								let result = 0;
 								if (roundVal === 3) {
 									result = average * 1;
-								}
-								else if (roundVal === 2) {
+								} else if (roundVal === 2) {
 									result = average * 0.66;
-								}
-								else {
+								} else {
 									result = average * 0.33;
 								}
 								row[key] = parseFloat(result.toFixed(2));
@@ -52,19 +41,31 @@ const TableComponent = ({ copoData, DA, IDA }) => {
 					return row;
 				})
 			);
+
+			// Reset the submitClicked flag to avoid re-triggering the effect
+			setSubmitClicked(false);
 		}
-	}, [copoData, DA, IDA, submitClicked, average]); // Added submitClicked to the dependency array
+	}, [copoData, DA, IDA, submitClicked, average, setData]); // Remove `data` from the dependency array
+	// Added submitClicked to the dependency array
 
 	// Button click handler to trigger the update
 	const handleSubmit = () => {
 		setSubmitClicked(true); // Set the flag to true when the button is clicked
 	};
 
+	console.log(data);
+
 	return (
 		<div className="container mt-4 table-responsive">
 			<h4 className="text-center">Course Outcomes & PO/PSO Mapping</h4>
 			{/* Add a button to trigger the forward action */}
-			<button className="btn btn-primary mb-3" onClick={handleSubmit}>Submit</button>
+			<button
+				className="btn btn-success  mt-2 mb-4 animation"
+				onClick={handleSubmit}
+			>
+				<i className="animation"></i> generate
+				<i className="animation"></i>
+			</button>
 			<table className="table table-bordered table-striped">
 				<thead>
 					<tr>
