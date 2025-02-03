@@ -8,8 +8,8 @@ import image8 from './images/image8.jpg';
 const Feedback = () => (
   <section className="webinfo-section py-5 text-black">
     <div className="container">
-      <h2 className="mb-4">Client Feedback</h2>
-      <p>Hear what our clients have to say about their experience with our web app.</p>
+      <h2 className="mb-4">Faculty Feedback</h2>
+      <p>Hear what faculty say about their experience with our web app.</p>
       <div
         id="feedbackCarousel"
         className="carousel slide"
@@ -31,7 +31,7 @@ const Feedback = () => (
                   <div className="card-body d-flex flex-column">
                     <h5 className="card-title">Michael Brown</h5>
                     <p className="card-text flex-grow-1">
-                      "This tool has streamlined our workflows and improved productivity across the board!"
+                      "This web app has simplified CO-PO mapping and made assessment tracking effortless!"
                     </p>
                   </div>
                 </div>
@@ -47,7 +47,7 @@ const Feedback = () => (
                   <div className="card-body d-flex flex-column">
                     <h5 className="card-title">Sophia Davis</h5>
                     <p className="card-text flex-grow-1">
-                      "The customer service was outstanding! They guided us through the setup process step by step."
+                      "A highly efficient tool that saves time and ensures accuracy in outcome-based education!"
                     </p>
                   </div>
                 </div>
@@ -63,7 +63,7 @@ const Feedback = () => (
                   <div className="card-body d-flex flex-column">
                     <h5 className="card-title">David Wilson</h5>
                     <p className="card-text flex-grow-1">
-                      "A perfect solution for our business needs. Highly reliable and efficient."
+                      " The tool has streamlined our workflows and significantly enhanced productivity!""
                     </p>
                   </div>
                 </div>
@@ -85,7 +85,7 @@ const Feedback = () => (
                   <div className="card-body d-flex flex-column">
                     <h5 className="card-title">Travis Head</h5>
                     <p className="card-text flex-grow-1">
-                      "The customer service was outstanding! They guided us through the setup process step by step."
+                      "With this platform, evaluating student performance against learning outcomes has never been easier"
                     </p>
                   </div>
                 </div>
@@ -101,7 +101,7 @@ const Feedback = () => (
                   <div className="card-body d-flex flex-column">
                     <h5 className="card-title">Sophia Davis</h5>
                     <p className="card-text flex-grow-1">
-                      "The customer service was outstanding! They guided us through the setup process step by step."
+                      "A must-have for faculty—seamless integration, insightful reports, and improved curriculum planning!"
                     </p>
                   </div>
                 </div>
@@ -117,7 +117,7 @@ const Feedback = () => (
                   <div className="card-body d-flex flex-column">
                     <h5 className="card-title">Michael Brown</h5>
                     <p className="card-text flex-grow-1">
-                      "This tool has streamlined our workflows and improved productivity across the board!"
+                      " This system enhances transparency and provides valuable insights for continuous improvement!"
                     </p>
                   </div>
                 </div>

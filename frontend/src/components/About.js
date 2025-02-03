@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 
 const About = () => {
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
-  const words = ["Welcome", "to", "CO-PO", "Mapping"];
+  const words = ["Welcome to Learning Outcomes"];
 
   useEffect(() => {
     if (currentWordIndex < words.length) {

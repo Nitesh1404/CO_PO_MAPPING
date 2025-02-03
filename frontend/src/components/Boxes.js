@@ -24,6 +24,23 @@ const Boxes = () => {
         </div>
 
         {/* Box 2 */}
+       
+     
+        {/* Box 1 */}
+        <div className="col-md-4">
+          <div className="card text-center border-primary mb-4" shadow-sm style={{ height: '200px' }}>
+            <div
+              className="card-body d-flex flex-column justify-content-center align-items-center"
+              style={{ height: '100%' }}
+            >
+              <h5 className="card-title custom-font">Access Mapping</h5>
+              <p className="card-text text-center custom-font">Click here for Access mapping.</p>
+              <button className="btn btn-primary d-flex flex-colunmn justify-content-center align-items-center "  to="/generatemapping">Generate</button>
+            </div>
+          </div>
+        </div>
+
+
      
       </div>
     </div>

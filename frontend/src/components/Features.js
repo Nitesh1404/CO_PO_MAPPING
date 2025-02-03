@@ -30,9 +30,9 @@ const Features = () => (
               <div className="icon-circle bg-success text-white mb-3 mx-auto">
                 <i className="fas fa-chart-bar fa-2x"></i>
               </div>
-              <h5 className="card-title fw-bold " style={{ fontFamily: 'Kanit, sans-serif'}}>Visual Reports</h5>
+              <h5 className="card-title fw-bold " style={{ fontFamily: 'Kanit, sans-serif'}}> User-Friendly Interface </h5>
               <p className="card-text text-muted mb-5" style={{ fontFamily: 'Kanit, sans-serif' }}>
-                Generate detailed visual reports, including graphs and charts, for easy evaluation, analysis, and decision-making.
+              Designed with simplicity in mind, our platform ensures that faculty, administrators can navigate easily without extensive training.
               </p>
             </div>
           </div>

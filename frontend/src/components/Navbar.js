@@ -6,7 +6,7 @@ function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg bg-white shadow-lg">
       <div className="container">
-        <Link className="navbar-brand text-primary fw-bold" to="/">CO PO Mapping</Link>
+        <Link className="navbar-brand text-primary fw-bold" to="/">Learning Outcomes</Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -26,6 +26,11 @@ function Navbar() {
             <li className="nav-item">
               <Link className="nav-link text-dark custom-font" to="/generate-mapping">Generate Mapping</Link>
             </li>
+
+            <li className="nav-item">
+              <Link className="nav-link text-dark custom-font" to="/access-mapping">Access Mapping</Link>
+            </li>
+
            
           </ul>
         </div>
