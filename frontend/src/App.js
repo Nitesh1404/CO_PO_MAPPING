@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import About from './components/About';
 import Info from './components/Info';
 import GenerateMapping from './components/generatemapping/GenerateMapping';
+import CoPoList from './components/co-po-output-data/CoPoList';
 
 const App = () => (
   <div className="d-flex flex-column min-vh-100">
@@ -25,6 +26,10 @@ const App = () => (
 
         {/* Route for Info Page */}
         <Route path="/info" element={<Info />} />
+
+        {/* access mapping  */}
+        <Route path="/access-mapping" element={<CoPoList />} />
+
       </Routes>
     </div>
 
