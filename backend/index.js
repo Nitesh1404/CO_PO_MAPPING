@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const connectToMongoDb = require('./db');
-const port = 3000;
+const port = 3001;
 const copoRoutes = require('./routes/copoRoutes');
 const cors = require('cors');
 

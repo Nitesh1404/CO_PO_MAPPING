@@ -1,6 +1,5 @@
 const CoPo = require('../models/copoModel');
 
-
 // GET all CO-PO mappings
 exports.getAllCoPo = async (req, res) => {
 	try {
@@ -44,6 +43,7 @@ exports.createCoPo = async (req, res) => {
 		});
 	}
 }
+
 
 // PUT (update) CO-PO mappings by ID
 // exports.updateCoPO = async (req, res) => {
