@@ -61,5 +61,5 @@ Institutions can use software tools like OBE systems or ERP solutions to automat
 ---
 
 ## Contact Us 📞
-For any questions or support regarding CO-PO Mapping, please reach out to [support@example.com](mailto:pratikmulik0049@gmail.com).
+For any questions or support regarding CO-PO Mapping, please reach out to [pratikmulik0049@gmail.com](mailto:pratikmulik0049@gmail.com).
 
