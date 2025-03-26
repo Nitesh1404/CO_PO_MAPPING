@@ -3,28 +3,27 @@ import logo from "../components/images/logo.jpg";
 
 function Footer() {
   return (
-    <footer className="bg-dark text-white py-4">
+    <footer className="bg-dark text-white py-2" style={{ fontSize: "14px" }}>
       <div className="container">
         <div className="row">
           {/* Left Section: Image and About Us */}
-          <div className="col-md-6 col-12 mb-4">
+          <div className="col-md-6 col-12 mb-2">
             <div className="d-md-flex flex-column align-items-center">
-              {/* Image at the top for large screens */}
-              <div className="mb-3">
+              {/* Smaller Image */}
+              <div className="mb-2">
                 <img
                   src={logo}
                   alt="Footer Logo"
                   className="footer-img"
-                  style={{ width: "175px", height: "auto" }}
+                  style={{ width: "120px", height: "auto" }}
                 />
               </div>
               {/* About Us section */}
               <div>
-                <h5>About Us</h5>
-                <p>
+                <h6>About Us</h6>
+                <p style={{ marginBottom: "5px" }}>
                   CO-PO Mapping aligns Course Outcomes with Program Outcomes for
-                  streamlined assessment and accreditation.<br></br>
-                  college student marks mapping based on course outcomes and program outcomes application..
+                  assessment and accreditation.
                 </p>
               </div>
             </div>
@@ -34,9 +33,9 @@ function Footer() {
           <div className="col-md-6 col-12">
             <div className="row">
               {/* Quick Links */}
-              <div className="col-6 mb-4">
-                <h5>Quick Links</h5>
-                <ul className="list-unstyled">
+              <div className="col-6 mb-2">
+                <h6>Quick Links</h6>
+                <ul className="list-unstyled" style={{ marginBottom: "5px" }}>
                   <li>
                     <a href="#home" className="text-white">
                       Education
@@ -49,24 +48,24 @@ function Footer() {
                   </li>
                   <li>
                     <a href="#services" className="text-white">
-                      CO-PO{" "}
+                      CO-PO
                     </a>
                   </li>
                   <li>
                     <a href="#contact" className="text-white">
-                      structure
+                      Structure
                     </a>
                   </li>
                 </ul>
               </div>
 
               {/* Contact */}
-              <div className="col-6 mb-4">
-                <h5>Contact</h5>
-                <p>
-                  <i className="fas fa-envelope"></i> abcdl@example.com
+              <div className="col-6 mb-2">
+                <h6>Contact</h6>
+                <p style={{ marginBottom: "5px" }}>
+                  <i className="fas fa-envelope"></i> abcd@example.com
                 </p>
-                <p>
+                <p style={{ marginBottom: "5px" }}>
                   <i className="fas fa-phone-alt"></i> +1 234 567 890
                 </p>
               </div>
@@ -74,9 +73,9 @@ function Footer() {
           </div>
         </div>
 
-        <hr />
+        <hr className="my-2" />
         <div className="text-center">
-          <p>
+          <p style={{ marginBottom: "0" }}>
             &copy; {new Date().getFullYear()} CO-PO Mapping. All rights
             reserved.
           </p>
