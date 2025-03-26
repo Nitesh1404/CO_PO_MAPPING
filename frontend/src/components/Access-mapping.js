@@ -4,11 +4,9 @@ import { useReactToPrint } from "react-to-print";
 const AccessMapping = () => {
   const subjects = [
     "Distributed Computing",
-    "Discrete Mathematics",
     "Data Structure Algorithm",
-    "Operating System",
     "Database Management System",
-    "Operating Systems Lab (PC-CS-212AL)"
+    "Operating Systems "
   ];
 
   // Mapping of COs for each subject
@@ -37,7 +35,7 @@ const AccessMapping = () => {
       { co: "CO5", description: "Use dynamic programming in problem-solving." },
       { co: "CO6", description: "Apply graph and tree algorithms." }
     ],
-    "Operating Systems Lab (PC-CS-212AL)": [
+    "Operating Systems ": [
       { co: "CO1", description: "Implement various CPU scheduling algorithms." },
       { co: "CO2", description: "Evaluate various page replacement algorithms." },
       { co: "CO3", description: "Implement the process of system call." },
