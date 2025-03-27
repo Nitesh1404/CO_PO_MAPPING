@@ -7,7 +7,8 @@ import Footer from './components/Footer';
 import About from './components/About';
 import Info from './components/Info';
 import GenerateMapping from './components/generatemapping/GenerateMapping';
-import CoPoList from './components/co-po-output-data/CoPoList';
+//mport CoPoList from './components/co-po-output-data/CoPoList';
+import AccessMapping from "./components/Access-mapping";
 
 const App = () => (
   <div className="d-flex flex-column min-vh-100">
@@ -28,7 +29,7 @@ const App = () => (
         <Route path="/info" element={<Info />} />
 
         {/* access mapping  */}
-        <Route path="/access-mapping" element={<CoPoList />} />
+        <Route path="/Access-mapping" element={<AccessMapping />} />
 
       </Routes>
     </div>

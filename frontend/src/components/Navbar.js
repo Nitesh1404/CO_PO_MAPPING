@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
+//import AccessMapping from './Access-mapping'; // Corrected import
 
 function Navbar() {
   return (
@@ -26,12 +27,10 @@ function Navbar() {
             <li className="nav-item">
               <Link className="nav-link text-dark custom-font" to="/generate-mapping">Generate Mapping</Link>
             </li>
-
             <li className="nav-item">
-              <Link className="nav-link text-dark custom-font" to="/access-mapping">Access Mapping</Link>
+              <Link className="nav-link text-dark custom-font" to="/access-mapping">Access Mapping</Link> 
+              {/* Ensure the route matches what's defined in App.js */}
             </li>
-
-           
           </ul>
         </div>
       </div>
