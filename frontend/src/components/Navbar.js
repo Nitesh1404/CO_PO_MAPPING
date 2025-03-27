@@ -25,8 +25,13 @@ function Navbar() {
               <Link className="nav-link text-dark custom-font" to="/">Home</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link text-dark custom-font" to="/generate-mapping">Generate Mapping</Link>
+              <Link className="nav-link text-dark custom-font" to="/generate-attainment">Generate Attainment</Link>
             </li>
+            <li className="nav-item">
+              <Link className="nav-link text-dark custom-font" to="/generate-mapping">Generate Mapping</Link> 
+              {/* Ensure the route matches what's defined in App.js */}
+            </li>
+            
             <li className="nav-item">
               <Link className="nav-link text-dark custom-font" to="/access-mapping">Access Mapping</Link> 
               {/* Ensure the route matches what's defined in App.js */}
